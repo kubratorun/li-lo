@@ -131,5 +131,5 @@ app.use('/contact', contact)
 
 
 app.listen(port,hostname ,() => {
-  console.log(`Server çalışıyor, http://${hostname}:${port}/`)
+  console.log(`Server is running, http://${hostname}:${port}/`)
 })

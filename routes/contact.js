@@ -52,7 +52,7 @@ async function main() {
 
   req.session.sessionFlash = {
     type: 'alert alert-success',
-    message: 'Mailiniz başarılı bir şekilde gönderildi! '
+    message: 'The mail has been sent succesfully...'
   }
 
   res.redirect('/contact')

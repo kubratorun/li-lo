@@ -108,7 +108,38 @@ router.get("/search", (req, res) => {
 
   router.get('/:id',(req,res) => {
       Post.findById(req.params.id).populate({path:'author', model: User}).then(post =>{
-        Category.find({}).then(categories => { 
+        
+      Category.aggregate([{
+
+
+        //mongodb 'deki posts db'de category şeklinde alanımız var değilmi ?(evet) ,peki buradaki category alanı nere ile ilişkili? ( categories db'deki id ile ilişkili) 
+        //bu ilişkiden faydalanarak lookup değişkeni yazıyoruz 
+        //from: 'posts' YANI ilişkili olan yeri söylüyoruz
+        //daha sonra localField:'_id' diyerek  categories'deki id 'yi belirtiyoruz AKLINDA TUT BU ID DİYORUZ
+        // foreign Field dediği şey ise yukarıda aklında tuttuğu id nere ile ilişkileniyor  postsdb deki """category""""" ile 
+        //sonra bunu ne olarak almasını istiyoruz as: 'posts' olarak diyoruz
+        //bu KISIMA KADAR birbirleriyle ilişkili olan verileri aldık 
+
+
+        $lookup:{
+          from: 'posts',
+          localField: '_id',
+          foreignField: 'category',
+          as:'posts'
+        }
+      },
+      {
+        //şimdi bunları $project olarak alıcaz
+        //ilk olarak id almak istiyoruz eğer id almak şistemezsek -id:0 yazabilitriz
+        $project:{
+          _id:1,
+          name:1,
+          num_of_posts :{$size: '$posts'} //size posts'un size ına eşit olucak diyoruz 
+        }
+
+      }
+
+      ]).then(categories => { 
           Post.find({}).populate({path:'author', model: User}).sort({$natural:-1}).then(posts =>{ 
             //tekil post sayfasında yer alanlar
             res.render('site/post', {post:post, categories:categories, posts:posts})
@@ -137,7 +168,7 @@ router.get("/search", (req, res) => {
 
 req.session.sessionFlash = {
   type: 'alert alert-success',
-  message: 'Postunuz başarılı bir şekilde oluşturuldu '
+  message: 'The post has been created succesfully...'
 }
 
 

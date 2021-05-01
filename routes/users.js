@@ -15,7 +15,7 @@ router.get('/register',(req,res) => {
 
             req.session.sessionFlash = {
             type: 'alert alert-success',
-            message: 'Kullanıcı başarılı  bir şekilde oluşturuldu '
+            message: 'User account created... '
             }
   
           res.redirect('/users/login')

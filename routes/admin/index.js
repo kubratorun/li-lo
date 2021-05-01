@@ -64,7 +64,7 @@ router.delete('/posts/:id', (req,res) => {
 
         })
     })
-
+  
     router.get('/posts/edit/:id',(req,res)  => {
 
         Post.findOne({_id:req.params.id}).then(post =>{
