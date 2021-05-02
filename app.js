@@ -130,6 +130,6 @@ app.use('/contact', contact)
  
 
 
-app.listen(process.env.PORT  || port,hostname ,() => {
+app.listen(port,hostname ,() => {
   console.log(`Server is running, http://${hostname}:${port}/`)
 })
