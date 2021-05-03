@@ -42,7 +42,7 @@ app.use(expressSession({
   resave: false,
   saveUninitialized: true,
   //cookie : { secure:false},
-  store: MongoStore.create({ mongoUrl:'mongodb://localhost:27017' })
+  //store: MongoStore.create({ mongoUrl:'mongodb://localhost:27017' })
 }))
 
 
